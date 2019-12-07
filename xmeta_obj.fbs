@@ -1,0 +1,20 @@
+/// This schema defines the format of meta-data packing in extra meta object.
+
+table user_attr {
+	key: string;
+	value: string;
+}
+
+table sparse_entry {
+	offset: uint64;
+	length: uint64;
+}
+
+table xmeta_format {
+	acl:[string];
+	user_attrs:[user_attr];
+	sparse_map:[sparse_entry];
+}
+
+root_type xmeta_format;
+file_extension "h";

@@ -1,0 +1,30 @@
+Illustration of usage of flatbuffers. This directory contains:
+
+# Definition of flatbuffer schema(*.fbs)
+# Compiled file using flatc compiler, found in ./flatbuffer/flatc
+# Generated header file, xmeta_obj_generated.h, which can be used by applications.
+# Example program which embeds sample content in flat buffer and extracts it back.
+
+I've written sample schema for extra meta-data object after reading flatbuffer's
+programmer documentation. The data mover will define it's own schema to be used
+as message format in F to F data transfer. The key take away(s):
+
+Binary generation:
+g++ -std=c++11 flat_buffer.cpp -I./flatbuffers/include
+
+- Schema is once defined and later can be modified in append only mode. This
+provides backward and forward compatibility.
+- Over releases, when we need to change our messaging format, schema will
+undergo changes.
+- flatc provides capability to compile schema into various supported programming
+languages. For this file_extension entry is used.
+- flatbuffer has it's own wrappers around vector, string and other primitive
+scaler data types. For complex STLs, we need to define tables.
+- Entry in table is of following type:
+	name:type = default_value (options)
+e.g., an uint8 vector foo can be represented as
+	foo:[uint8] // vector is represented as [] 
+- Keyword deprecated can be used to remove fields from existing schema.
+
+TBD:
+Understand GOTCHAs mentioned on programmer's documentation page.
